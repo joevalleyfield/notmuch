@@ -1,4 +1,5 @@
 import argparse  # pragma: no cover
+import time
 
 from . import BaseClass, base_function  # pragma: no cover
 
@@ -25,18 +26,18 @@ def main() -> None:  # pragma: no cover
     )
     # This is required positional argument
     parser.add_argument(
-        "name",
-        type=str,
-        help="The username",
-        default="joevalleyfield",
+        "max_range",
+        type=int,
+        help="range to count to",
+        default=10,
     )
     # This is optional named argument
     parser.add_argument(
-        "-m",
-        "--message",
-        type=str,
-        help="The Message",
-        default="Hello",
+        "-d",
+        "--delay",
+        type=float,
+        help="time to sleep between ticks",
+        default=1.0,
         required=False,
     )
     parser.add_argument(
@@ -46,15 +47,21 @@ def main() -> None:  # pragma: no cover
         help="Optionally adds verbosity",
     )
     args = parser.parse_args()
-    print(f"{args.message} {args.name}!")
-    if args.verbose:
-        print("Verbose mode is on.")
 
-    print("Executing main function")
+    for i in range(args.max_range):
+        if args.verbose:
+            print("The current digit is {i}.")
+        else:
+            print(i)
+        time.sleep(args.delay)
+
+    if args.verbose:
+        print("Executing main function")
     base = BaseClass()
-    print(base.base_method())
-    print(base_function())
-    print("End of main function")
+    if args.verbose:
+        print(base.base_method())
+        print(base_function())
+        print("End of main function")
 
 
 if __name__ == "__main__":  # pragma: no cover
